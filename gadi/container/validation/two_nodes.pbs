@@ -1,0 +1,37 @@
+#!/bin/bash
+#PBS -P m18
+#PBS -N uw3_sif_two_nodes
+#PBS -q normal
+#PBS -l walltime=00:30:00
+#PBS -l ncpus=96
+#PBS -l mem=190gb
+#PBS -l storage=gdata/m18+gdata/n69+scratch/m18+scratch/n69
+#PBS -l wd
+set -uo pipefail
+module load singularity openmpi/4.1.7
+HERE=$PBS_O_WORKDIR
+ROOT=/scratch/m18/$USER/container-validation/20261005/two-nodes
+mkdir -p "$ROOT/native"
+status=0
+export UW_REQUIRE_TWO_NODES=1
+export UW_TEST_OVERLAY=
+( source /home/565/$USER/uw3-fault-representation-benchmarks/production_scripts/gadi/activate.sh && \
+  cd "$ROOT/native" && \
+  UW_VALIDATION_OUTPUT="$ROOT/native" UW_MESH_CACHE_DIR="$ROOT/native/meshes" \
+  timeout 600 mpiexec -n 2 --map-by node python3 "$HERE/stokes.py" && \
+  timeout 240 mpiexec -n 2 --map-by node python3 "$HERE/../../../common/pingpong.py" ) \
+  > "$ROOT/native.log" 2>&1 || status=1
+for variant in int32 int64; do
+  SIF=/g/data/m18/$USER/containers/underworld3/uw3-${variant}-ecdec1d0.sif
+  mkdir -p "$ROOT/$variant"
+  cd "$ROOT/$variant"
+  export UW_VALIDATION_OUTPUT=$ROOT/$variant
+  export UW_MESH_CACHE_DIR=$ROOT/$variant/meshes
+  timeout 600 mpiexec -n 2 --map-by node bash "$HERE/run_container.sh" "$SIF" "$HERE/stokes.py" \
+    > "$ROOT/$variant/stokes.log" 2>&1 || status=1
+  timeout 240 mpiexec -n 2 --map-by node bash "$HERE/run_container.sh" "$SIF" "$HERE/../../../common/pingpong.py" \
+    > "$ROOT/$variant/pingpong.log" 2>&1 || status=1
+  bash "$HERE/run_container.sh" "$SIF" "$HERE/compare.py" "$ROOT/native" "$ROOT/$variant" \
+    > "$ROOT/$variant/comparison.log" 2>&1 || status=1
+done
+exit "$status"

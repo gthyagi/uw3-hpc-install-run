@@ -1,0 +1,43 @@
+#!/bin/bash
+#PBS -P m18
+#PBS -N uw3_sif_level1
+#PBS -q normal
+#PBS -l walltime=02:00:00
+#PBS -l ncpus=4
+#PBS -l mem=32gb
+#PBS -l storage=gdata/m18+gdata/n69+scratch/m18+scratch/n69
+#PBS -l wd
+set -uo pipefail
+module load singularity openmpi/4.1.7
+HERE=$PBS_O_WORKDIR
+ROOT=/scratch/m18/$USER/container-validation/20261005
+SOURCE=/g/data/n69/$USER/uw3-pixi/container-validation-source
+SIF=/g/data/m18/$USER/containers/underworld3/uw3-${VARIANT}-ecdec1d0.sif
+OUT=$ROOT/$VARIANT
+mkdir -p "$OUT"
+export UW_TEST_OVERLAY=$OUT/test-packages
+export UW_MESH_CACHE_DIR=$OUT/meshes
+# All test dependencies go to a disposable overlay; no native environment rebuild.
+singularity exec --cleanenv "$SIF" /opt/venv/bin/python3 -m pip install \
+  --target "$UW_TEST_OVERLAY" -r "$HERE/requirements.txt" > "$OUT/test-dependencies.log" 2>&1 || exit 1
+status=0
+cd "$SOURCE"
+bash "$HERE/run_container.sh" "$SIF" -m pytest -c tests/pytest.ini \
+  tests -m 'level_1 and not level_2 and not level_3 and not mpi' \
+  --timeout=120 --dist loadfile -n 4 --junitxml="$OUT/level1.xml" \
+  > "$OUT/level1.log" 2>&1 || status=1
+# Preserve the native installation and activate it through the existing read-only helper.
+mkdir -p "$OUT/native" "$OUT/container"
+( source /home/565/$USER/uw3-fault-representation-benchmarks/production_scripts/gadi/activate.sh && \
+  cd "$OUT/native" && \
+  UW_VALIDATION_OUTPUT="$OUT/native" UW_MESH_CACHE_DIR="$OUT/native/meshes" \
+  timeout 600 mpiexec -n 4 python3 "$HERE/stokes.py" ) > "$OUT/native.log" 2>&1 || status=1
+cd "$OUT/container"
+export UW_VALIDATION_OUTPUT=$OUT/container
+export UW_MESH_CACHE_DIR=$OUT/container/meshes
+timeout 600 mpiexec -n 4 bash "$HERE/run_container.sh" "$SIF" "$HERE/stokes.py" \
+  > "$OUT/container.log" 2>&1 || status=1
+bash "$HERE/run_container.sh" "$SIF" "$HERE/compare.py" "$OUT/native" "$OUT/container" \
+  > "$OUT/comparison.log" 2>&1 || status=1
+printf 'Validation exit status: %s\n' "$status"
+exit "$status"
