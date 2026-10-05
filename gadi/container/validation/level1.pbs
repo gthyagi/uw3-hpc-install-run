@@ -17,9 +17,8 @@ OUT=$ROOT/$VARIANT
 mkdir -p "$OUT"
 export UW_TEST_OVERLAY=$OUT/test-packages
 export UW_MESH_CACHE_DIR=$OUT/meshes
-# All test dependencies go to a disposable overlay; no native environment rebuild.
-singularity exec --cleanenv "$SIF" /opt/venv/bin/python3 -m pip install \
-  --target "$UW_TEST_OVERLAY" -r "$HERE/requirements.txt" > "$OUT/test-dependencies.log" 2>&1 || exit 1
+# Prepare the overlay on a login node before submission; compute nodes need no downloads.
+[ -d "$UW_TEST_OVERLAY/pytest" ] || { echo "Missing test overlay: $UW_TEST_OVERLAY" >&2; exit 1; }
 status=0
 cd "$SOURCE"
 bash "$HERE/run_container.sh" "$SIF" -m pytest -c tests/pytest.ini \
