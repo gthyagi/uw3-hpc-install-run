@@ -1,9 +1,15 @@
 # Versioned Gadi container validation
 
 Run from this directory on Gadi after synchronizing this Git checkout. The
-scripts validate the int32/int64 `ecdec1d0` SIF files in the user's m18 storage
+scripts validate the int32/int64 `0fb244a7` SIF files in the user's m18 storage
 and use tests from the matching detached UW3 source checkout. Results go to
-`/scratch/m18/$USER/container-validation/20261005/`.
+`/scratch/m18/$USER/container-validation/20261005/runtime-0fb244a7/` for Level 1
+and `two-nodes-0fb244a7/` alongside it for the two-node job. The matching test
+source is `container-validation-source-0fb244a7` in the UW3 workspace. The
+existing pytest overlays from the original validation are reused; they do not
+replace UW3 in the corrected image. Override `UW_VALIDATION_ROOT`,
+`UW_VALIDATION_SOURCE` or `UW_TEST_OVERLAY` when validating another revision.
+The two-node script accepts `UW_INT32_SIF` and `UW_INT64_SIF` overrides.
 
 1. `qsub -v VARIANT=int32 level1.pbs`
 2. Submit int64 after int32 completes using `-W depend=afterany:JOBID`.

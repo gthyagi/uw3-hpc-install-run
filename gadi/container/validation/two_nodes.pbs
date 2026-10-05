@@ -10,9 +10,9 @@
 set -uo pipefail
 module load singularity openmpi/4.1.7
 HERE=$PBS_O_WORKDIR
-ROOT=${UW_VALIDATION_ROOT:-/scratch/m18/$USER/container-validation/20261005/two-nodes}
-INT32_SIF=${UW_INT32_SIF:-/g/data/m18/$USER/containers/underworld3/uw3-int32-ecdec1d0.sif}
-INT64_SIF=${UW_INT64_SIF:-/g/data/m18/$USER/containers/underworld3/uw3-int64-ecdec1d0.sif}
+ROOT=${UW_VALIDATION_ROOT:-/scratch/m18/$USER/container-validation/20261005/two-nodes-0fb244a7}
+INT32_SIF=${UW_INT32_SIF:-/g/data/m18/$USER/containers/underworld3/uw3-int32-0fb244a7.sif}
+INT64_SIF=${UW_INT64_SIF:-/g/data/m18/$USER/containers/underworld3/uw3-int64-0fb244a7.sif}
 for image in "$INT32_SIF" "$INT64_SIF"; do
   test -r "$image" || { echo "Missing container: $image" >&2; exit 1; }
 done

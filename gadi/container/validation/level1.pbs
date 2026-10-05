@@ -10,12 +10,12 @@
 set -uo pipefail
 module load singularity openmpi/4.1.7
 HERE=$PBS_O_WORKDIR
-ROOT=/scratch/m18/$USER/container-validation/20261005
-SOURCE=/g/data/n69/$USER/uw3-pixi/container-validation-source
-SIF=/g/data/m18/$USER/containers/underworld3/uw3-${VARIANT}-ecdec1d0.sif
+ROOT=${UW_VALIDATION_ROOT:-/scratch/m18/$USER/container-validation/20261005/runtime-0fb244a7}
+SOURCE=${UW_VALIDATION_SOURCE:-/g/data/n69/$USER/uw3-pixi/container-validation-source-0fb244a7}
+SIF=/g/data/m18/$USER/containers/underworld3/uw3-${VARIANT}-0fb244a7.sif
 OUT=$ROOT/$VARIANT
 mkdir -p "$OUT"
-export UW_TEST_OVERLAY=$OUT/test-packages
+export UW_TEST_OVERLAY=${UW_TEST_OVERLAY:-/scratch/m18/$USER/container-validation/20261005/$VARIANT/test-packages}
 export UW_MESH_CACHE_DIR=$OUT/meshes
 # Prepare the overlay on a login node before submission; compute nodes need no downloads.
 [ -d "$UW_TEST_OVERLAY/pytest" ] || { echo "Missing test overlay: $UW_TEST_OVERLAY" >&2; exit 1; }
