@@ -10,7 +10,12 @@
 set -uo pipefail
 module load singularity openmpi/4.1.7
 HERE=$PBS_O_WORKDIR
-ROOT=/scratch/m18/$USER/container-validation/20261005/two-nodes
+ROOT=${UW_VALIDATION_ROOT:-/scratch/m18/$USER/container-validation/20261005/two-nodes}
+INT32_SIF=${UW_INT32_SIF:-/g/data/m18/$USER/containers/underworld3/uw3-int32-ecdec1d0.sif}
+INT64_SIF=${UW_INT64_SIF:-/g/data/m18/$USER/containers/underworld3/uw3-int64-ecdec1d0.sif}
+for image in "$INT32_SIF" "$INT64_SIF"; do
+  test -r "$image" || { echo "Missing container: $image" >&2; exit 1; }
+done
 mkdir -p "$ROOT/native"
 status=0
 export UW_REQUIRE_TWO_NODES=1
@@ -22,7 +27,7 @@ export UW_TEST_OVERLAY=
   timeout 240 mpiexec -n 2 --map-by node python3 "$HERE/../../../common/pingpong.py" ) \
   > "$ROOT/native.log" 2>&1 || status=1
 for variant in int32 int64; do
-  SIF=/g/data/m18/$USER/containers/underworld3/uw3-${variant}-ecdec1d0.sif
+  if [[ $variant == int32 ]]; then SIF=$INT32_SIF; else SIF=$INT64_SIF; fi
   mkdir -p "$ROOT/$variant"
   cd "$ROOT/$variant"
   export UW_VALIDATION_OUTPUT=$ROOT/$variant
