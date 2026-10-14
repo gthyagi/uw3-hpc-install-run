@@ -79,3 +79,34 @@ Both replacements keep h=1/32, degree two, mid-depth, 48 ranks, 192 GB and
 four-hour limits. The saved debug runner now selects express. Gadi was
 fast-forwarded to benchmark `e345b692aa834d4c088e06402b0e597aaf13cdc5` before
 resubmission; that revision is now pinned for these jobs.
+
+## Geometry-package rebuild for Stage 7 velocity checks
+
+The current analytical structure and yearless Zhong API are installed separately
+at UW3 `4ca8dc7ffd4a7b594387231709d3909a357f51c7`. The same immutable int32
+SIF was used; the older prefix above is retained.
+
+```text
+Source: /scratch/m18/tg7098/uw3-container-builds/topography-geoid-4ca8dc7f-int32-src
+Package: /g/data/m18/tg7098/containers/underworld3/builds/topography-geoid-4ca8dc7f-int32/python
+Build job: 181255768.gadi-pbs, express, exit 0, walltime 4 min 22 s
+Build log: /scratch/m18/tg7098/uw3-container-builds/logs/topography-geoid-4ca8dc7f-int32-build.log
+```
+
+The serial suite passed 178 tests with one MPI-only skip. Twenty-six selected
+regressions passed on every one of eight host-MPI ranks. Runtime verification
+checks all five canonical cylindrical/spherical case modules inside the
+installed prefix, absence of the removed `Zhong2008` root alias, PETSc 3.25.4
+int32, float64 scalars and parallel HDF5. Compact evidence is retained in
+`records/topography-geoid-4ca8dc7f-int32/`. These installation checks do not close
+the layered finite-element velocity-accuracy gate.
+
+The benchmark source was synchronized to
+`8aa6ee6110b0ad0bc7da63595b80b8e094771f14`. Its degree-5 h=1/32 tolerance
+check first audits the unchanged saved velocity field from `181251459`, then
+solves at tolerance 1e-8 on the same shared mesh with 48 ranks and 192 GB.
+The express replacement is `181255969.gadi-pbs` (30-minute limit). The initial
+dependent submission `181255876` remained queued with a project-allocation
+reservation error and was cancelled before execution; the account report
+showed 176.49 KSU available in m18. Numerical completion is recorded in the
+benchmark repository after the job finishes.
