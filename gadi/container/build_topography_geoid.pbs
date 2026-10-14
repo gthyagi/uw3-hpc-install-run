@@ -4,7 +4,7 @@
 # qsub -v SOURCE=...,DEST=...,SIF=...,REVISION=<full-sha> build_topography_geoid.pbs
 #PBS -P m18
 #PBS -N uw3_topog_i32
-#PBS -q normal
+#PBS -q express
 #PBS -l ncpus=8,mem=32gb,walltime=01:00:00,jobfs=8gb
 #PBS -l storage=gdata/m18+gdata/n69+scratch/m18+scratch/n69
 #PBS -j oe
@@ -56,6 +56,7 @@ singularity exec --cleanenv \
         /src/tests/test_1082_spherical_solver_contract.py \
         /src/tests/test_1083_spherical_stokes_sheet_setup.py \
         /src/tests/test_1084_rotated_solver_type.py \
+        /src/tests/test_1085_analytic_stokes_cases.py \
         --junitxml=/build/serial-tests.xml
     '
 
@@ -71,6 +72,8 @@ timeout 600 mpiexec -n 8 bash "$HERE/validation/run_container.sh" "$SIF" \
     -m pytest -q --import-mode=importlib \
     "$SOURCE/tests/test_1082_spherical_solver_contract.py" \
     "$SOURCE/tests/test_1083_spherical_stokes_sheet_setup.py" \
-    "$SOURCE/tests/test_1084_rotated_solver_type.py"
+    "$SOURCE/tests/test_1084_rotated_solver_type.py" \
+    "$SOURCE/tests/test_1085_analytic_stokes_cases.py" \
+    -k 'not thieulot_bulk_walls_and_constitutive_stress and not thieulot_spherical_published_fields_and_poles and not thieulot_annulus_published_fields and not force_sign_negative_control'
 printf '%s\n' "branch=feature/topography-geoid-consolidation revision=$REVISION petsc_int_bits=32" > "$DEST/INSTALL_VALIDATED"
 echo BRANCH_INSTALL_VALIDATED
