@@ -22,17 +22,18 @@ assert MPI.COMM_WORLD.size == size
 assert hasattr(generic_solvers.SNES_Stokes_SaddlePt, "rotated_solver_type")
 case_modules = {}
 for cls, owner in (
-    (uw.analytic.CylindricalStokes, "cylindrical.kramer"),
+    (uw.analytic.KramerCylindricalStokes, "cylindrical.kramer"),
     (uw.analytic.ThieulotCylindricalStokes, "cylindrical.thieulot"),
-    (uw.analytic.SphericalStokes, "spherical.kramer"),
+    (uw.analytic.KramerSphericalStokes, "spherical.kramer"),
     (uw.analytic.ThieulotSphericalStokes, "spherical.thieulot"),
-    (uw.analytic.Zhong, "spherical.zhong"),
+    (uw.analytic.ZhongSphericalStokes, "spherical.zhong"),
 ):
     assert cls.__module__ == "underworld3.analytic." + owner
     origin = Path(inspect.getfile(cls)).resolve()
     assert origin.is_relative_to(prefix)
     case_modules[owner] = str(origin)
 assert not hasattr(uw.analytic, "Zhong2008")
+assert not hasattr(uw.analytic, "Zhong")
 if size > 1:
     assert "4.1.7" in MPI.Get_library_version(), "Host MPI injection was not selected"
 record = {
