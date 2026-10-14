@@ -39,3 +39,26 @@ set to the package directory. The benchmark repository's targeted refinement
 runner uses the same injected-runtime setup. Requested Zhong runs start at
 h=1/32 using historical resource allocations; no coarse Zhong models are
 submitted by this installation job.
+
+## Targeted model submissions
+
+The benchmark repository on Gadi was fast-forwarded to
+`72f95dbac71ffaa279204516124709924e93b22e`, matching the pushed Mac source.
+Untracked `gadi_records/` was preserved. The saved container launcher was
+adapted from `uw3-fault-representation-benchmarks` as requested.
+
+The following h=1/32, degree-two, mid-depth jobs were submitted after successful
+installation. Each requests 48 MPI ranks, 192 GB and four hours, using the
+historical 1/32 resource settings and existing reusable meshes.
+
+| Case | PBS job |
+| --- | --- |
+| Isoviscous control | `181250513.gadi-pbs` |
+| Layered viscosity | `181250514.gadi-pbs` |
+
+Submission is not a claim of numerical completion or accuracy acceptance.
+Outputs and logs have distinct case/job paths under
+`/scratch/m18/tg7098/uw3-mantle-convection-benchmarks/output/topography_geoid/consolidation_2026-10-14/gadi_int32/`.
+The model scripts verify the benchmark commit before starting; keep that
+checkout at the pinned revision while these jobs are queued/running. A later
+source update should use an isolated checkout or wait for completion.
