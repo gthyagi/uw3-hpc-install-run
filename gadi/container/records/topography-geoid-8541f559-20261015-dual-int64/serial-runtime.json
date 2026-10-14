@@ -1,0 +1,28 @@
+{
+  "passed": true,
+  "ranks": [
+    {
+      "rank": 0,
+      "hostname": "gadi-cpu-clx-2483.gadi.nci.org.au",
+      "uw_module": "/build/python/underworld3/__init__.py",
+      "uw_native_solver": "/build/python/underworld3/cython/generic_solvers.cpython-312-x86_64-linux-gnu.so",
+      "petsc_version": [
+        3,
+        25,
+        4
+      ],
+      "petsc_integer_bits": 64,
+      "expected_petsc_integer_bits": 64,
+      "petsc_scalar_bits": 64,
+      "parallel_hdf5": true,
+      "mpi_library": "Open MPI v4.1.1, package: Open MPI mockbuild@ord1-prod-x86build003.svc.aws.rockylinux.org Distribution, ident: 4.1.1, repo rev: v4.1.1, Apr 24, 2021\u0000",
+      "analytic_case_modules": {
+        "cylindrical.kramer": "/build/python/underworld3/analytic/cylindrical/kramer.py",
+        "cylindrical.thieulot": "/build/python/underworld3/analytic/cylindrical/thieulot.py",
+        "spherical.kramer": "/build/python/underworld3/analytic/spherical/kramer.py",
+        "spherical.thieulot": "/build/python/underworld3/analytic/spherical/thieulot.py",
+        "spherical.zhong": "/build/python/underworld3/analytic/spherical/zhong.py"
+      }
+    }
+  ]
+}

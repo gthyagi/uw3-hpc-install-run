@@ -1,0 +1,189 @@
+{
+  "passed": true,
+  "ranks": [
+    {
+      "rank": 0,
+      "hostname": "gadi-cpu-clx-2483.gadi.nci.org.au",
+      "uw_module": "/g/data/m18/tg7098/containers/underworld3/builds/topography-geoid-8541f559-20261015-dual-int64/python/underworld3/__init__.py",
+      "uw_native_solver": "/g/data/m18/tg7098/containers/underworld3/builds/topography-geoid-8541f559-20261015-dual-int64/python/underworld3/cython/generic_solvers.cpython-312-x86_64-linux-gnu.so",
+      "petsc_version": [
+        3,
+        25,
+        4
+      ],
+      "petsc_integer_bits": 64,
+      "expected_petsc_integer_bits": 64,
+      "petsc_scalar_bits": 64,
+      "parallel_hdf5": true,
+      "mpi_library": "Open MPI v4.1.7, package: Open MPI apps@gadi-cpu-clx-1415.gadi.nci.org.au Distribution, ident: 4.1.7, repo rev: v4.1.7, Oct 31, 2024\u0000",
+      "analytic_case_modules": {
+        "cylindrical.kramer": "/g/data/m18/tg7098/containers/underworld3/builds/topography-geoid-8541f559-20261015-dual-int64/python/underworld3/analytic/cylindrical/kramer.py",
+        "cylindrical.thieulot": "/g/data/m18/tg7098/containers/underworld3/builds/topography-geoid-8541f559-20261015-dual-int64/python/underworld3/analytic/cylindrical/thieulot.py",
+        "spherical.kramer": "/g/data/m18/tg7098/containers/underworld3/builds/topography-geoid-8541f559-20261015-dual-int64/python/underworld3/analytic/spherical/kramer.py",
+        "spherical.thieulot": "/g/data/m18/tg7098/containers/underworld3/builds/topography-geoid-8541f559-20261015-dual-int64/python/underworld3/analytic/spherical/thieulot.py",
+        "spherical.zhong": "/g/data/m18/tg7098/containers/underworld3/builds/topography-geoid-8541f559-20261015-dual-int64/python/underworld3/analytic/spherical/zhong.py"
+      }
+    },
+    {
+      "rank": 1,
+      "hostname": "gadi-cpu-clx-2483.gadi.nci.org.au",
+      "uw_module": "/g/data/m18/tg7098/containers/underworld3/builds/topography-geoid-8541f559-20261015-dual-int64/python/underworld3/__init__.py",
+      "uw_native_solver": "/g/data/m18/tg7098/containers/underworld3/builds/topography-geoid-8541f559-20261015-dual-int64/python/underworld3/cython/generic_solvers.cpython-312-x86_64-linux-gnu.so",
+      "petsc_version": [
+        3,
+        25,
+        4
+      ],
+      "petsc_integer_bits": 64,
+      "expected_petsc_integer_bits": 64,
+      "petsc_scalar_bits": 64,
+      "parallel_hdf5": true,
+      "mpi_library": "Open MPI v4.1.7, package: Open MPI apps@gadi-cpu-clx-1415.gadi.nci.org.au Distribution, ident: 4.1.7, repo rev: v4.1.7, Oct 31, 2024\u0000",
+      "analytic_case_modules": {
+        "cylindrical.kramer": "/g/data/m18/tg7098/containers/underworld3/builds/topography-geoid-8541f559-20261015-dual-int64/python/underworld3/analytic/cylindrical/kramer.py",
+        "cylindrical.thieulot": "/g/data/m18/tg7098/containers/underworld3/builds/topography-geoid-8541f559-20261015-dual-int64/python/underworld3/analytic/cylindrical/thieulot.py",
+        "spherical.kramer": "/g/data/m18/tg7098/containers/underworld3/builds/topography-geoid-8541f559-20261015-dual-int64/python/underworld3/analytic/spherical/kramer.py",
+        "spherical.thieulot": "/g/data/m18/tg7098/containers/underworld3/builds/topography-geoid-8541f559-20261015-dual-int64/python/underworld3/analytic/spherical/thieulot.py",
+        "spherical.zhong": "/g/data/m18/tg7098/containers/underworld3/builds/topography-geoid-8541f559-20261015-dual-int64/python/underworld3/analytic/spherical/zhong.py"
+      }
+    },
+    {
+      "rank": 2,
+      "hostname": "gadi-cpu-clx-2483.gadi.nci.org.au",
+      "uw_module": "/g/data/m18/tg7098/containers/underworld3/builds/topography-geoid-8541f559-20261015-dual-int64/python/underworld3/__init__.py",
+      "uw_native_solver": "/g/data/m18/tg7098/containers/underworld3/builds/topography-geoid-8541f559-20261015-dual-int64/python/underworld3/cython/generic_solvers.cpython-312-x86_64-linux-gnu.so",
+      "petsc_version": [
+        3,
+        25,
+        4
+      ],
+      "petsc_integer_bits": 64,
+      "expected_petsc_integer_bits": 64,
+      "petsc_scalar_bits": 64,
+      "parallel_hdf5": true,
+      "mpi_library": "Open MPI v4.1.7, package: Open MPI apps@gadi-cpu-clx-1415.gadi.nci.org.au Distribution, ident: 4.1.7, repo rev: v4.1.7, Oct 31, 2024\u0000",
+      "analytic_case_modules": {
+        "cylindrical.kramer": "/g/data/m18/tg7098/containers/underworld3/builds/topography-geoid-8541f559-20261015-dual-int64/python/underworld3/analytic/cylindrical/kramer.py",
+        "cylindrical.thieulot": "/g/data/m18/tg7098/containers/underworld3/builds/topography-geoid-8541f559-20261015-dual-int64/python/underworld3/analytic/cylindrical/thieulot.py",
+        "spherical.kramer": "/g/data/m18/tg7098/containers/underworld3/builds/topography-geoid-8541f559-20261015-dual-int64/python/underworld3/analytic/spherical/kramer.py",
+        "spherical.thieulot": "/g/data/m18/tg7098/containers/underworld3/builds/topography-geoid-8541f559-20261015-dual-int64/python/underworld3/analytic/spherical/thieulot.py",
+        "spherical.zhong": "/g/data/m18/tg7098/containers/underworld3/builds/topography-geoid-8541f559-20261015-dual-int64/python/underworld3/analytic/spherical/zhong.py"
+      }
+    },
+    {
+      "rank": 3,
+      "hostname": "gadi-cpu-clx-2483.gadi.nci.org.au",
+      "uw_module": "/g/data/m18/tg7098/containers/underworld3/builds/topography-geoid-8541f559-20261015-dual-int64/python/underworld3/__init__.py",
+      "uw_native_solver": "/g/data/m18/tg7098/containers/underworld3/builds/topography-geoid-8541f559-20261015-dual-int64/python/underworld3/cython/generic_solvers.cpython-312-x86_64-linux-gnu.so",
+      "petsc_version": [
+        3,
+        25,
+        4
+      ],
+      "petsc_integer_bits": 64,
+      "expected_petsc_integer_bits": 64,
+      "petsc_scalar_bits": 64,
+      "parallel_hdf5": true,
+      "mpi_library": "Open MPI v4.1.7, package: Open MPI apps@gadi-cpu-clx-1415.gadi.nci.org.au Distribution, ident: 4.1.7, repo rev: v4.1.7, Oct 31, 2024\u0000",
+      "analytic_case_modules": {
+        "cylindrical.kramer": "/g/data/m18/tg7098/containers/underworld3/builds/topography-geoid-8541f559-20261015-dual-int64/python/underworld3/analytic/cylindrical/kramer.py",
+        "cylindrical.thieulot": "/g/data/m18/tg7098/containers/underworld3/builds/topography-geoid-8541f559-20261015-dual-int64/python/underworld3/analytic/cylindrical/thieulot.py",
+        "spherical.kramer": "/g/data/m18/tg7098/containers/underworld3/builds/topography-geoid-8541f559-20261015-dual-int64/python/underworld3/analytic/spherical/kramer.py",
+        "spherical.thieulot": "/g/data/m18/tg7098/containers/underworld3/builds/topography-geoid-8541f559-20261015-dual-int64/python/underworld3/analytic/spherical/thieulot.py",
+        "spherical.zhong": "/g/data/m18/tg7098/containers/underworld3/builds/topography-geoid-8541f559-20261015-dual-int64/python/underworld3/analytic/spherical/zhong.py"
+      }
+    },
+    {
+      "rank": 4,
+      "hostname": "gadi-cpu-clx-2483.gadi.nci.org.au",
+      "uw_module": "/g/data/m18/tg7098/containers/underworld3/builds/topography-geoid-8541f559-20261015-dual-int64/python/underworld3/__init__.py",
+      "uw_native_solver": "/g/data/m18/tg7098/containers/underworld3/builds/topography-geoid-8541f559-20261015-dual-int64/python/underworld3/cython/generic_solvers.cpython-312-x86_64-linux-gnu.so",
+      "petsc_version": [
+        3,
+        25,
+        4
+      ],
+      "petsc_integer_bits": 64,
+      "expected_petsc_integer_bits": 64,
+      "petsc_scalar_bits": 64,
+      "parallel_hdf5": true,
+      "mpi_library": "Open MPI v4.1.7, package: Open MPI apps@gadi-cpu-clx-1415.gadi.nci.org.au Distribution, ident: 4.1.7, repo rev: v4.1.7, Oct 31, 2024\u0000",
+      "analytic_case_modules": {
+        "cylindrical.kramer": "/g/data/m18/tg7098/containers/underworld3/builds/topography-geoid-8541f559-20261015-dual-int64/python/underworld3/analytic/cylindrical/kramer.py",
+        "cylindrical.thieulot": "/g/data/m18/tg7098/containers/underworld3/builds/topography-geoid-8541f559-20261015-dual-int64/python/underworld3/analytic/cylindrical/thieulot.py",
+        "spherical.kramer": "/g/data/m18/tg7098/containers/underworld3/builds/topography-geoid-8541f559-20261015-dual-int64/python/underworld3/analytic/spherical/kramer.py",
+        "spherical.thieulot": "/g/data/m18/tg7098/containers/underworld3/builds/topography-geoid-8541f559-20261015-dual-int64/python/underworld3/analytic/spherical/thieulot.py",
+        "spherical.zhong": "/g/data/m18/tg7098/containers/underworld3/builds/topography-geoid-8541f559-20261015-dual-int64/python/underworld3/analytic/spherical/zhong.py"
+      }
+    },
+    {
+      "rank": 5,
+      "hostname": "gadi-cpu-clx-2483.gadi.nci.org.au",
+      "uw_module": "/g/data/m18/tg7098/containers/underworld3/builds/topography-geoid-8541f559-20261015-dual-int64/python/underworld3/__init__.py",
+      "uw_native_solver": "/g/data/m18/tg7098/containers/underworld3/builds/topography-geoid-8541f559-20261015-dual-int64/python/underworld3/cython/generic_solvers.cpython-312-x86_64-linux-gnu.so",
+      "petsc_version": [
+        3,
+        25,
+        4
+      ],
+      "petsc_integer_bits": 64,
+      "expected_petsc_integer_bits": 64,
+      "petsc_scalar_bits": 64,
+      "parallel_hdf5": true,
+      "mpi_library": "Open MPI v4.1.7, package: Open MPI apps@gadi-cpu-clx-1415.gadi.nci.org.au Distribution, ident: 4.1.7, repo rev: v4.1.7, Oct 31, 2024\u0000",
+      "analytic_case_modules": {
+        "cylindrical.kramer": "/g/data/m18/tg7098/containers/underworld3/builds/topography-geoid-8541f559-20261015-dual-int64/python/underworld3/analytic/cylindrical/kramer.py",
+        "cylindrical.thieulot": "/g/data/m18/tg7098/containers/underworld3/builds/topography-geoid-8541f559-20261015-dual-int64/python/underworld3/analytic/cylindrical/thieulot.py",
+        "spherical.kramer": "/g/data/m18/tg7098/containers/underworld3/builds/topography-geoid-8541f559-20261015-dual-int64/python/underworld3/analytic/spherical/kramer.py",
+        "spherical.thieulot": "/g/data/m18/tg7098/containers/underworld3/builds/topography-geoid-8541f559-20261015-dual-int64/python/underworld3/analytic/spherical/thieulot.py",
+        "spherical.zhong": "/g/data/m18/tg7098/containers/underworld3/builds/topography-geoid-8541f559-20261015-dual-int64/python/underworld3/analytic/spherical/zhong.py"
+      }
+    },
+    {
+      "rank": 6,
+      "hostname": "gadi-cpu-clx-2483.gadi.nci.org.au",
+      "uw_module": "/g/data/m18/tg7098/containers/underworld3/builds/topography-geoid-8541f559-20261015-dual-int64/python/underworld3/__init__.py",
+      "uw_native_solver": "/g/data/m18/tg7098/containers/underworld3/builds/topography-geoid-8541f559-20261015-dual-int64/python/underworld3/cython/generic_solvers.cpython-312-x86_64-linux-gnu.so",
+      "petsc_version": [
+        3,
+        25,
+        4
+      ],
+      "petsc_integer_bits": 64,
+      "expected_petsc_integer_bits": 64,
+      "petsc_scalar_bits": 64,
+      "parallel_hdf5": true,
+      "mpi_library": "Open MPI v4.1.7, package: Open MPI apps@gadi-cpu-clx-1415.gadi.nci.org.au Distribution, ident: 4.1.7, repo rev: v4.1.7, Oct 31, 2024\u0000",
+      "analytic_case_modules": {
+        "cylindrical.kramer": "/g/data/m18/tg7098/containers/underworld3/builds/topography-geoid-8541f559-20261015-dual-int64/python/underworld3/analytic/cylindrical/kramer.py",
+        "cylindrical.thieulot": "/g/data/m18/tg7098/containers/underworld3/builds/topography-geoid-8541f559-20261015-dual-int64/python/underworld3/analytic/cylindrical/thieulot.py",
+        "spherical.kramer": "/g/data/m18/tg7098/containers/underworld3/builds/topography-geoid-8541f559-20261015-dual-int64/python/underworld3/analytic/spherical/kramer.py",
+        "spherical.thieulot": "/g/data/m18/tg7098/containers/underworld3/builds/topography-geoid-8541f559-20261015-dual-int64/python/underworld3/analytic/spherical/thieulot.py",
+        "spherical.zhong": "/g/data/m18/tg7098/containers/underworld3/builds/topography-geoid-8541f559-20261015-dual-int64/python/underworld3/analytic/spherical/zhong.py"
+      }
+    },
+    {
+      "rank": 7,
+      "hostname": "gadi-cpu-clx-2483.gadi.nci.org.au",
+      "uw_module": "/g/data/m18/tg7098/containers/underworld3/builds/topography-geoid-8541f559-20261015-dual-int64/python/underworld3/__init__.py",
+      "uw_native_solver": "/g/data/m18/tg7098/containers/underworld3/builds/topography-geoid-8541f559-20261015-dual-int64/python/underworld3/cython/generic_solvers.cpython-312-x86_64-linux-gnu.so",
+      "petsc_version": [
+        3,
+        25,
+        4
+      ],
+      "petsc_integer_bits": 64,
+      "expected_petsc_integer_bits": 64,
+      "petsc_scalar_bits": 64,
+      "parallel_hdf5": true,
+      "mpi_library": "Open MPI v4.1.7, package: Open MPI apps@gadi-cpu-clx-1415.gadi.nci.org.au Distribution, ident: 4.1.7, repo rev: v4.1.7, Oct 31, 2024\u0000",
+      "analytic_case_modules": {
+        "cylindrical.kramer": "/g/data/m18/tg7098/containers/underworld3/builds/topography-geoid-8541f559-20261015-dual-int64/python/underworld3/analytic/cylindrical/kramer.py",
+        "cylindrical.thieulot": "/g/data/m18/tg7098/containers/underworld3/builds/topography-geoid-8541f559-20261015-dual-int64/python/underworld3/analytic/cylindrical/thieulot.py",
+        "spherical.kramer": "/g/data/m18/tg7098/containers/underworld3/builds/topography-geoid-8541f559-20261015-dual-int64/python/underworld3/analytic/spherical/kramer.py",
+        "spherical.thieulot": "/g/data/m18/tg7098/containers/underworld3/builds/topography-geoid-8541f559-20261015-dual-int64/python/underworld3/analytic/spherical/thieulot.py",
+        "spherical.zhong": "/g/data/m18/tg7098/containers/underworld3/builds/topography-geoid-8541f559-20261015-dual-int64/python/underworld3/analytic/spherical/zhong.py"
+      }
+    }
+  ]
+}

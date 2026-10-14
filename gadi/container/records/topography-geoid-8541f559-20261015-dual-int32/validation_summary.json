@@ -1,0 +1,44 @@
+{
+  "job_id": "181264066.gadi-pbs",
+  "petsc_integer_bits": 32,
+  "source": "/scratch/m18/tg7098/uw3-container-builds/topography-geoid-8541f559-20261015-dual-int32-src",
+  "install": "/g/data/m18/tg7098/containers/underworld3/builds/topography-geoid-8541f559-20261015-dual-int32",
+  "image": "/g/data/m18/tg7098/containers/underworld3/uw3-int32-0fb244a7.sif",
+  "queue": "express",
+  "ncpus": 8,
+  "memory": "32gb",
+  "walltime": "01:00:00",
+  "pbs": {
+    "job_state": "F",
+    "Exit_status": "0",
+    "resources_used.walltime": "00:04:49",
+    "resources_used.cput": "00:06:14",
+    "resources_used.mem": "4414124kb",
+    "resources_used.ncpus": "8"
+  },
+  "pytest_summary_lines": [
+    "200 passed, 1 skipped in 28.00s",
+    "\u001b[32m\u001b[32m\u001b[1m48 passed\u001b[0m, \u001b[33m14 deselected\u001b[0m\u001b[32m in 9.62s\u001b[0m\u001b[0m",
+    "\u001b[32m\u001b[32m\u001b[1m48 passed\u001b[0m, \u001b[33m14 deselected\u001b[0m\u001b[32m in 9.63s\u001b[0m\u001b[0m",
+    "\u001b[32m\u001b[32m\u001b[1m48 passed\u001b[0m, \u001b[33m14 deselected\u001b[0m\u001b[32m in 9.65s\u001b[0m\u001b[0m",
+    "\u001b[32m\u001b[32m\u001b[1m48 passed\u001b[0m, \u001b[33m14 deselected\u001b[0m\u001b[32m in 9.67s\u001b[0m\u001b[0m",
+    "\u001b[32m\u001b[32m\u001b[1m48 passed\u001b[0m, \u001b[33m14 deselected\u001b[0m\u001b[32m in 9.68s\u001b[0m\u001b[0m",
+    "\u001b[32m\u001b[32m\u001b[1m48 passed\u001b[0m, \u001b[33m14 deselected\u001b[0m\u001b[32m in 9.70s\u001b[0m\u001b[0m",
+    "\u001b[32m\u001b[32m\u001b[1m48 passed\u001b[0m, \u001b[33m14 deselected\u001b[0m\u001b[32m in 9.71s\u001b[0m\u001b[0m",
+    "\u001b[32m\u001b[32m\u001b[1m48 passed\u001b[0m, \u001b[33m14 deselected\u001b[0m\u001b[32m in 9.50s\u001b[0m\u001b[0m"
+  ],
+  "final_log_lines": [
+    "",
+    "======================================================================================",
+    "                  Resource Usage on 2026-10-15 01:02:04:",
+    "   Job Id:             181264066.gadi-pbs",
+    "   Project:            m18",
+    "   Exit Status:        0",
+    "   Service Units:      3.85",
+    "   NCPUs Requested:    8                   CPU Time Used: 00:06:14        ",
+    "   Memory Requested:   32.0GB                Memory Used: 4.21GB          ",
+    "   Walltime Requested: 01:00:00            Walltime Used: 00:04:49        ",
+    "   JobFS Requested:    8.0GB                  JobFS Used: 140.1KB         ",
+    "======================================================================================"
+  ]
+}
