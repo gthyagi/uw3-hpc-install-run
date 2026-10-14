@@ -1,0 +1,18 @@
+{
+  "date": "2026-10-15",
+  "job_id": "181268880.gadi-pbs",
+  "revision": "f9ff739189956be64152b9c7582b8905eb02e0bb",
+  "petsc_integer_bits": 32,
+  "install": "/g/data/m18/tg7098/containers/underworld3/builds/topography-geoid-f9ff7391-st7-sheet-int32",
+  "image": "/g/data/m18/tg7098/containers/underworld3/uw3-int32-0fb244a7.sif",
+  "serial_passed": 205,
+  "serial_skipped": 1,
+  "mpi8_passed_per_rank": 53,
+  "mpi8_deselected_per_rank": 14,
+  "pbs": {
+    "resources_used.mem": "5323236kb",
+    "resources_used.walltime": "00:04:26",
+    "job_state": "F",
+    "Exit_status": "0"
+  }
+}
