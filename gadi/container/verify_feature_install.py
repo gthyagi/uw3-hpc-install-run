@@ -14,9 +14,11 @@ from underworld3.cython import generic_solvers
 prefix = Path(sys.argv[1]).resolve()
 output = Path(sys.argv[2])
 size = int(sys.argv[3])
+expected_integer_bits = int(sys.argv[4]) if len(sys.argv) > 4 else 32
+assert expected_integer_bits in (32, 64)
 assert Path(uw.__file__).resolve().is_relative_to(prefix)
 assert Path(generic_solvers.__file__).resolve().is_relative_to(prefix)
-assert np.dtype(PETSc.IntType).itemsize == 4
+assert 8 * np.dtype(PETSc.IntType).itemsize == expected_integer_bits
 assert h5py.get_config().mpi
 assert MPI.COMM_WORLD.size == size
 assert hasattr(generic_solvers.SNES_Stokes_SaddlePt, "rotated_solver_type")
@@ -43,6 +45,7 @@ record = {
     "uw_native_solver": generic_solvers.__file__,
     "petsc_version": PETSc.Sys.getVersion(),
     "petsc_integer_bits": 8 * np.dtype(PETSc.IntType).itemsize,
+    "expected_petsc_integer_bits": expected_integer_bits,
     "petsc_scalar_bits": 8 * np.dtype(PETSc.ScalarType).itemsize,
     "parallel_hdf5": h5py.get_config().mpi,
     "mpi_library": MPI.Get_library_version(),

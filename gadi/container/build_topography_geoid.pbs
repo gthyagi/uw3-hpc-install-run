@@ -1,7 +1,8 @@
 #!/bin/bash
 # Build the requested UW3 branch against an existing image, then validate it.
 # Fetch SOURCE on a login node first; the compute job performs no downloads.
-# qsub -v SOURCE=...,DEST=...,SIF=...,REVISION=<full-sha> build_topography_geoid.pbs
+# qsub -v SOURCE=...,DEST=...,SIF=...,REVISION=<full-sha>,PETSC_INT_BITS=32 build_topography_geoid.pbs
+# Use a separate fresh SOURCE/DEST and matching existing image for each width.
 #PBS -P m18
 #PBS -N uw3_topog_i32
 #PBS -q express
@@ -13,8 +14,10 @@ module load singularity openmpi/4.1.7 || exit 1
 set -euo pipefail
 : "${SOURCE:?Set SOURCE to a clean feature checkout}"
 : "${DEST:?Set DEST to a new versioned installation directory}"
-: "${SIF:?Set SIF to the existing int32 image}"
+: "${SIF:?Set SIF to the existing image matching PETSC_INT_BITS}"
 : "${REVISION:?Set REVISION to the full requested commit}"
+PETSC_INT_BITS=${PETSC_INT_BITS:-32}
+[[ "$PETSC_INT_BITS" == 32 || "$PETSC_INT_BITS" == 64 ]]
 HERE=$(dirname "$(readlink -f "$0")")
 # PBS executes a spool copy, so get the operations checkout from submission.
 HERE=${OPERATIONS_DIR:-$PBS_O_WORKDIR}
@@ -27,6 +30,7 @@ test ! -e "$DEST/python"
 mkdir -p "$DEST"
 sha256sum "$SIF" > "$DEST/image.sha256"
 printf '%s\n' "$REVISION" > "$DEST/source_revision.txt"
+printf '%s\n' "$PETSC_INT_BITS" > "$DEST/petsc_integer_bits.txt"
 printf '%s\n' "${PBS_JOBID}" > "$DEST/build_job_id.txt"
 cp "$HERE/build_topography_geoid.pbs" "$DEST/"
 cp "$HERE/verify_feature_install.py" "$DEST/"
@@ -35,17 +39,19 @@ cp "$HERE/verify_feature_install.py" "$DEST/"
 # Bash: Singularity --env parses commas as separators between assignments.
 singularity exec --cleanenv \
     --bind "$SOURCE:/src,$DEST:/build,$PBS_JOBFS:/tmp" \
+    --env EXPECTED_PETSC_INT_BITS="$PETSC_INT_BITS" \
     "$SIF" bash -c 'set -euo pipefail
     export SETUPTOOLS_SCM_PRETEND_VERSION=0.0.0.dev0
     export OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1
     export OMPI_MCA_pml=ob1 OMPI_MCA_btl=self,tcp OMPI_MCA_mtl=^ofi
-    export PYTHONDONTWRITEBYTECODE=1 UW_ENABLE_TELEMETRY=0
+    export PYTHONDONTWRITEBYTECODE=1 UW_NO_USAGE_METRICS=1
+    /opt/venv/bin/python3 -c "import os, numpy as np; from petsc4py import PETSc; assert 8*np.dtype(PETSc.IntType).itemsize == int(os.environ[\"EXPECTED_PETSC_INT_BITS\"])"
     cd /src
     /opt/venv/bin/python3 -m pip install --no-index --no-build-isolation --no-deps --no-cache-dir --target=/build/python .
     export PYTHONPATH="/build/python${PYTHONPATH:+:$PYTHONPATH}"
     export UW_MESH_CACHE_DIR=/build/meshes-serial
     cd /build
-    /opt/venv/bin/python3 /build/verify_feature_install.py /build/python /build/serial-runtime.json 1
+    /opt/venv/bin/python3 /build/verify_feature_install.py /build/python /build/serial-runtime.json 1 "$EXPECTED_PETSC_INT_BITS"
     /opt/venv/bin/python3 -m pytest -q --import-mode=importlib \
         /src/tests/test_1070_postprocessing_geoid.py \
         /src/tests/test_1073_postprocessing_cylindrical_geoid.py \
@@ -66,9 +72,10 @@ singularity exec --cleanenv \
 export UW_TEST_OVERLAY="$DEST/python"
 export UW_MESH_CACHE_DIR="$DEST/meshes-mpi8"
 export PYTHONDONTWRITEBYTECODE=1
+export UW_NO_USAGE_METRICS=1
 cd "$DEST"
 timeout 600 mpiexec -n 8 bash "$HERE/validation/run_container.sh" "$SIF" \
-    "$DEST/verify_feature_install.py" "$DEST/python" "$DEST/mpi8-runtime.json" 8
+    "$DEST/verify_feature_install.py" "$DEST/python" "$DEST/mpi8-runtime.json" 8 "$PETSC_INT_BITS"
 timeout 600 mpiexec -n 8 bash "$HERE/validation/run_container.sh" "$SIF" \
     -m pytest -q --import-mode=importlib \
     "$SOURCE/tests/test_1082_spherical_solver_contract.py" \
@@ -77,5 +84,5 @@ timeout 600 mpiexec -n 8 bash "$HERE/validation/run_container.sh" "$SIF" \
     "$SOURCE/tests/test_1085_analytic_stokes_cases.py" \
     "$SOURCE/tests/test_1086_analytic_public_api.py" \
     -k 'not thieulot_bulk_walls_and_constitutive_stress and not thieulot_spherical_published_fields_and_poles and not thieulot_annulus_published_fields and not force_sign_negative_control'
-printf '%s\n' "branch=feature/topography-geoid-consolidation revision=$REVISION petsc_int_bits=32" > "$DEST/INSTALL_VALIDATED"
+printf '%s\n' "branch=feature/topography-geoid-consolidation revision=$REVISION petsc_int_bits=$PETSC_INT_BITS" > "$DEST/INSTALL_VALIDATED"
 echo BRANCH_INSTALL_VALIDATED

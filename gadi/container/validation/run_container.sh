@@ -13,6 +13,6 @@ exec singularity exec \
   --env PYTHONPATH="${UW_TEST_OVERLAY:-}:/usr/local/lib:/opt/venv/lib/python3.12/site-packages" \
   --env UW_VALIDATION_OUTPUT="${UW_VALIDATION_OUTPUT:-}" \
   --env UW_REQUIRE_TWO_NODES="${UW_REQUIRE_TWO_NODES:-0}" \
-  --env UW_ENABLE_TELEMETRY=0 --env OMP_NUM_THREADS=1 --env OPENBLAS_NUM_THREADS=1 \
+  --env UW_NO_USAGE_METRICS=1 --env OMP_NUM_THREADS=1 --env OPENBLAS_NUM_THREADS=1 \
   --env UW_MESH_CACHE_DIR="${UW_MESH_CACHE_DIR:-.meshes}" \
   "$sif" /opt/venv/bin/python3 "$@"
