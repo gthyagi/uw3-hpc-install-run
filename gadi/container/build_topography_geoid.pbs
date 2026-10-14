@@ -1,0 +1,76 @@
+#!/bin/bash
+# Build the requested UW3 branch against an existing image, then validate it.
+# Fetch SOURCE on a login node first; the compute job performs no downloads.
+# qsub -v SOURCE=...,DEST=...,SIF=...,REVISION=<full-sha> build_topography_geoid.pbs
+#PBS -P m18
+#PBS -N uw3_topog_i32
+#PBS -q normal
+#PBS -l ncpus=8,mem=32gb,walltime=01:00:00,jobfs=8gb
+#PBS -l storage=gdata/m18+gdata/n69+scratch/m18+scratch/n69
+#PBS -j oe
+
+module load singularity openmpi/4.1.7 || exit 1
+set -euo pipefail
+: "${SOURCE:?Set SOURCE to a clean feature checkout}"
+: "${DEST:?Set DEST to a new versioned installation directory}"
+: "${SIF:?Set SIF to the existing int32 image}"
+: "${REVISION:?Set REVISION to the full requested commit}"
+HERE=$(dirname "$(readlink -f "$0")")
+# PBS executes a spool copy, so get the operations checkout from submission.
+HERE=${OPERATIONS_DIR:-$PBS_O_WORKDIR}
+[[ "$REVISION" =~ ^[0-9a-f]{40}$ ]]
+test "$(git -C "$SOURCE" rev-parse HEAD)" = "$REVISION"
+test "$(git -C "$SOURCE" branch --show-current)" = feature/topography-geoid-consolidation
+test -z "$(git -C "$SOURCE" status --porcelain)"
+test -r "$SIF"
+test ! -e "$DEST/python"
+mkdir -p "$DEST"
+sha256sum "$SIF" > "$DEST/image.sha256"
+printf '%s\n' "$REVISION" > "$DEST/source_revision.txt"
+printf '%s\n' "${PBS_JOBID}" > "$DEST/build_job_id.txt"
+cp "$HERE/build_topography_geoid.pbs" "$DEST/"
+cp "$HERE/verify_feature_install.py" "$DEST/"
+
+# Preserve the image's Python/PETSc paths. Set comma-valued MPI options inside
+# Bash: Singularity --env parses commas as separators between assignments.
+singularity exec --cleanenv \
+    --bind "$SOURCE:/src,$DEST:/build,$PBS_JOBFS:/tmp" \
+    "$SIF" bash -c 'set -euo pipefail
+    export SETUPTOOLS_SCM_PRETEND_VERSION=0.0.0.dev0
+    export OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1
+    export OMPI_MCA_pml=ob1 OMPI_MCA_btl=self,tcp OMPI_MCA_mtl=^ofi
+    export PYTHONDONTWRITEBYTECODE=1 UW_ENABLE_TELEMETRY=0
+    cd /src
+    /opt/venv/bin/python3 -m pip install --no-index --no-build-isolation --no-deps --no-cache-dir --target=/build/python .
+    export PYTHONPATH="/build/python${PYTHONPATH:+:$PYTHONPATH}"
+    export UW_MESH_CACHE_DIR=/build/meshes-serial
+    cd /build
+    /opt/venv/bin/python3 /build/verify_feature_install.py /build/python /build/serial-runtime.json 1
+    /opt/venv/bin/python3 -m pytest -q --import-mode=importlib \
+        /src/tests/test_1070_postprocessing_geoid.py \
+        /src/tests/test_1073_postprocessing_cylindrical_geoid.py \
+        /src/tests/test_1074_analytic_cylindrical_gravity.py \
+        /src/tests/test_1075_analytic_spherical_gravity.py \
+        /src/tests/test_1030_analytic_zhong2008.py \
+        /src/tests/test_1078_spherical_gravity_oracle.py \
+        /src/tests/test_1082_spherical_solver_contract.py \
+        /src/tests/test_1083_spherical_stokes_sheet_setup.py \
+        /src/tests/test_1084_rotated_solver_type.py \
+        --junitxml=/build/serial-tests.xml
+    '
+
+# Apply the same host MPI injection as the existing production template. Do
+# not use --cleanenv for launched ranks: they need the launcher environment.
+export UW_TEST_OVERLAY="$DEST/python"
+export UW_MESH_CACHE_DIR="$DEST/meshes-mpi8"
+export PYTHONDONTWRITEBYTECODE=1
+cd "$DEST"
+timeout 600 mpiexec -n 8 bash "$HERE/validation/run_container.sh" "$SIF" \
+    "$DEST/verify_feature_install.py" "$DEST/python" "$DEST/mpi8-runtime.json" 8
+timeout 600 mpiexec -n 8 bash "$HERE/validation/run_container.sh" "$SIF" \
+    -m pytest -q --import-mode=importlib \
+    "$SOURCE/tests/test_1082_spherical_solver_contract.py" \
+    "$SOURCE/tests/test_1083_spherical_stokes_sheet_setup.py" \
+    "$SOURCE/tests/test_1084_rotated_solver_type.py"
+printf '%s\n' "branch=feature/topography-geoid-consolidation revision=$REVISION petsc_int_bits=32" > "$DEST/INSTALL_VALIDATED"
+echo BRANCH_INSTALL_VALIDATED

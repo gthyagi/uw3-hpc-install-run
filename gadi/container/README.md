@@ -94,3 +94,51 @@ gadi_container_job.sh         PBS template, host MPI injected
 gadi_container_install.sh     admin: publish an image
 gadi_pingpong_transports.pbs  the measurement behind FINDINGS.md
 ```
+
+## Installing the topography/geoid feature in the existing int32 image
+
+The existing user image is
+`/g/data/m18/$USER/containers/underworld3/uw3-int32-0fb244a7.sif`.
+Build `feature/topography-geoid-consolidation` inside that image and prepend the
+result through the existing `EXTRA_PKGS` option. The SIF stays unchanged.
+PETSc uses 32-bit indices; this does not change its scalar floating-point type.
+
+Fetch on a login node, using a separate source directory for each revision and
+image variant. The PBS build performs no downloads. For revision `1c1b983b`:
+
+```bash
+revision=1c1b983b1e6dfac5ab5d6c63611ee2f2fdc78c93
+source_dir=/scratch/m18/$USER/uw3-container-builds/topography-geoid-1c1b983b-int32-src
+install_dir=/g/data/m18/$USER/containers/underworld3/builds/topography-geoid-1c1b983b-int32
+sif=/g/data/m18/$USER/containers/underworld3/uw3-int32-0fb244a7.sif
+
+git clone --single-branch --branch feature/topography-geoid-consolidation \
+  https://github.com/gthyagi/underworld3.git "$source_dir"
+test "$(git -C "$source_dir" rev-parse HEAD)" = "$revision"
+cd ~/uw3-hpc-install-run/gadi/container
+qsub -v SOURCE="$source_dir",DEST="$install_dir",SIF="$sif",REVISION="$revision" \
+  build_topography_geoid.pbs
+```
+
+The job builds the branch's native extensions against the image's Python,
+NumPy, PETSc and MPI, then checks the import origins, 32-bit PETSc index ABI,
+parallel HDF5, selected analytical/postprocessing tests and native regressions
+in serial and on eight ranks. MPI validation uses the existing host-MPI
+injection wrapper. `INSTALL_VALIDATED` is written only after all checks pass;
+a partial build must not be used for production. Reusing a nonempty installation
+directory is rejected. Preserve failed build evidence or choose a new directory
+for a retry.
+
+After successful validation, use the normal job template:
+
+```bash
+test -f "$install_dir/INSTALL_VALIDATED"
+qsub -v SIF="$sif",EXTRA_PKGS="$install_dir/python",SCRIPT=/abs/path/model.py \
+  gadi_container_job.sh
+```
+
+This command illustrates a later model submission; installation itself submits
+only the build and regression job. `image.sha256`, `source_revision.txt`,
+`build_job_id.txt`, runtime JSON and test results are retained beside the
+installed package. See [the installation record](topography_geoid_int32_2026-10-14.md) for the recorded
+installation outcome.
