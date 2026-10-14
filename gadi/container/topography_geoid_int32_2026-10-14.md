@@ -62,3 +62,20 @@ Outputs and logs have distinct case/job paths under
 The model scripts verify the benchmark commit before starting; keep that
 checkout at the pinned revision while these jobs are queued/running. A later
 source update should use an isolated checkout or wait for completion.
+
+## Express replacements
+
+The user requests express for debugging. Gadi rejects `qmove`, so the normal
+jobs were cancelled and replaced; they had started during the queue-change
+attempt, so the hold requests did not suspend their execution. Their partial
+outputs remain separate from the new jobs and are not accuracy acceptance.
+
+| Case | Express replacement | Cancelled normal job |
+| --- | --- | --- |
+| Isoviscous | `181250804.gadi-pbs` | `181250513.gadi-pbs` |
+| Layered | `181250805.gadi-pbs` | `181250514.gadi-pbs` |
+
+Both replacements keep h=1/32, degree two, mid-depth, 48 ranks, 192 GB and
+four-hour limits. The saved debug runner now selects express. Gadi was
+fast-forwarded to benchmark `e345b692aa834d4c088e06402b0e597aaf13cdc5` before
+resubmission; that revision is now pinned for these jobs.
