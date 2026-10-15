@@ -41,6 +41,16 @@ singularity pull docker://ghcr.io/underworldcode/underworld3-gadi:latest
 qsub -v SIF=$PWD/underworld3-gadi_latest.sif ... gadi_container_job.sh
 ```
 
+## UW3 source-update policy
+
+Fetch validated source milestones, and batch installation updates. Documentation,
+comments and formatting do not require recompilation. Rebuild after substantial
+numerical/native changes, or before a model/test needs changed runtime behavior.
+Use a fresh source checkout and versioned install prefix inside the existing
+PETSc int32 SIF; preserve PETSc, the SIF and older installs. Record the source
+commit and Python/native origins actually used by each run. Int64 jobs require
+an explicit user request and are reserved for very large models.
+
 ## Developing Underworld3 in the container
 
 Edit the source, build it *inside* the container on a login node (so the extensions link
