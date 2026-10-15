@@ -1,0 +1,35 @@
+#!/bin/bash
+# Validation-only continuation: preserve the compiled package and import UW3 before pytest collection.
+#PBS -P m18
+#PBS -q express
+#PBS -N uw3_ppdocs_gate
+#PBS -l ncpus=8,mem=32gb,walltime=00:20:00,jobfs=2gb
+#PBS -l storage=gdata/m18+gdata/n69+scratch/m18+scratch/n69
+#PBS -j oe
+module load singularity openmpi/4.1.7 || exit 1
+set -euo pipefail
+SOURCE=/scratch/m18/tg7098/uw3-container-builds/topography-geoid-e33878a6-docs-int32-src
+DEST=/g/data/m18/tg7098/containers/underworld3/builds/topography-geoid-e33878a6-docs-int32
+SIF=/g/data/m18/tg7098/containers/underworld3/uw3-int32-0fb244a7.sif
+OPS=/home/565/tg7098/uw3-hpc-install-run/gadi/container
+ROOT=/scratch/m18/tg7098/uw3-container-builds/postprocessing-docs-20261015
+REVISION=e33878a6b64e575e1f165231dd974c5388e50e6f
+[[ "$(git -C "$SOURCE" rev-parse HEAD)" == "$REVISION" ]]
+[[ "$(cat "$DEST/source_revision.txt")" == "$REVISION" ]]
+[[ "$(cat "$DEST/petsc_integer_bits.txt")" == 32 ]]
+test ! -f "$DEST/INSTALL_VALIDATED"
+export UW_TEST_OVERLAY="$DEST/python" UW_MESH_CACHE_DIR="$DEST/meshes-mpi8-bootstrap"
+export PYTHONDONTWRITEBYTECODE=1 UW_NO_USAGE_METRICS=1
+cd "$DEST"
+timeout -k 10 90 mpiexec -n 8 bash "$OPS/validation/run_container.sh" "$SIF" "$DEST/verify_feature_install.py" "$DEST/python" "$DEST/mpi8-bootstrap-runtime.json" 8 32
+timeout -k 10 600 mpiexec -n 8 bash "$OPS/validation/run_container.sh" "$SIF" "$ROOT/pytest_import_first.py" --import-mode=importlib \
+ "$SOURCE/tests/test_1082_spherical_solver_contract.py" \
+ "$SOURCE/tests/test_1083_spherical_stokes_sheet_setup.py" \
+ "$SOURCE/tests/test_1084_rotated_solver_type.py" \
+ "$SOURCE/tests/test_1085_analytic_stokes_cases.py" \
+ "$SOURCE/tests/test_1086_analytic_public_api.py" \
+ -k 'not thieulot_bulk_walls_and_constitutive_stress and not thieulot_spherical_published_fields_and_poles and not thieulot_annulus_published_fields and not force_sign_negative_control'
+timeout -k 10 90 mpiexec -n 1 bash "$OPS/validation/run_container.sh" "$SIF" "$ROOT/verify_postprocessing_docs.py" "$DEST/python" "$SOURCE" "$DEST/postprocessing-docstrings.json"
+printf '%s\n' "branch=feature/topography-geoid-consolidation revision=$REVISION petsc_int_bits=32" > "$DEST/INSTALL_VALIDATED"
+printf '%s\n' "$PBS_JOBID" > "$DEST/validation_job_id.txt"
+echo DOCUMENTATION_INSTALL_VALIDATED

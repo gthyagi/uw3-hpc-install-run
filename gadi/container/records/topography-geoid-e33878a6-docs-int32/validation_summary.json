@@ -1,0 +1,31 @@
+{
+  "date": "2026-10-15",
+  "revision": "e33878a6b64e575e1f165231dd974c5388e50e6f",
+  "install": "/g/data/m18/tg7098/containers/underworld3/builds/topography-geoid-e33878a6-docs-int32",
+  "image": "/g/data/m18/tg7098/containers/underworld3/uw3-int32-0fb244a7.sif",
+  "petsc_integer_bits": 32,
+  "compiled_build_job": "181290547.gadi-pbs",
+  "compiled_build_note": "Compilation and serial gates passed; original MPI pytest collection hit a partial-import error and stalled; stopped with evidence preserved. No validation marker was written by that attempt.",
+  "validation_job": "181291617.gadi-pbs",
+  "validation_pbs": {
+    "job_state": "F",
+    "Exit_status": "0",
+    "resources_used.walltime": "00:00:25",
+    "resources_used.mem": "4642636kb"
+  },
+  "serial_passed": 205,
+  "serial_skipped": 1,
+  "mpi8_passed_per_rank": 53,
+  "mpi8_deselected_per_rank": 14,
+  "documentation_functions": 20,
+  "documentation_arguments": 200,
+  "documentation_response_classes": 8,
+  "source_installed_python_match": true,
+  "numerical_ast_unchanged_from": "f9ff739189956be64152b9c7582b8905eb02e0bb",
+  "focused_sphinx_warnings": 0,
+  "full_api_unrelated_diagnostics": 9,
+  "mpi_gate_change": "Import installed UW3 before invoking pytest; collection guard and host MPI injection remain unchanged",
+  "no_benchmark_model_submitted": true,
+  "int64_job_submitted": false,
+  "validated": true
+}

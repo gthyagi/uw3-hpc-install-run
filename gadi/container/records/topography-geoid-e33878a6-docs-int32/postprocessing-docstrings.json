@@ -1,0 +1,340 @@
+{
+  "passed": true,
+  "petsc_integer_bits": 32,
+  "package_origin": "/g/data/m18/tg7098/containers/underworld3/builds/topography-geoid-e33878a6-docs-int32/python/underworld3/__init__.py",
+  "function_count": 20,
+  "argument_count": 200,
+  "response_classes": [
+    "GeoidResponse",
+    "SelfGravityResponse",
+    "SphericalShellResponse",
+    "CylindricalGravityResponse",
+    "CylindricalSelfGravityResponse",
+    "CylindricalAnnulusResponse",
+    "PhysicalPotentialSolve",
+    "InterfaceLoadDiagnostics"
+  ],
+  "source_package_match": true,
+  "functions": [
+    {
+      "module": "underworld3.postprocessing.geoid",
+      "name": "spherical_shell_geoid_response",
+      "arguments": [
+        "radius_inner",
+        "radius_outer",
+        "harmonic_degree",
+        "surface_topography_coefficient",
+        "cmb_topography_coefficient",
+        "internal_load_radius",
+        "internal_load_coefficient"
+      ]
+    },
+    {
+      "module": "underworld3.postprocessing.geoid",
+      "name": "spherical_shell_self_gravity_response",
+      "arguments": [
+        "radius_inner",
+        "radius_outer",
+        "harmonic_degree",
+        "surface_topography_coefficient",
+        "cmb_topography_coefficient",
+        "surface_density_contrast",
+        "cmb_density_contrast",
+        "planet_radius",
+        "gravity",
+        "internal_load_radius",
+        "internal_load_coefficient",
+        "gravitational_constant"
+      ]
+    },
+    {
+      "module": "underworld3.postprocessing.geoid",
+      "name": "spherical_shell_response_from_rotated_stokes",
+      "arguments": [
+        "stokes",
+        "radius_inner",
+        "radius_outer",
+        "harmonic_degree",
+        "internal_load_radius",
+        "internal_load_coefficient",
+        "surface_boundary",
+        "cmb_boundary",
+        "surface_buoyancy_scale",
+        "cmb_buoyancy_scale",
+        "include_self_gravity",
+        "surface_density_contrast",
+        "cmb_density_contrast",
+        "planet_radius",
+        "gravity",
+        "gravitational_constant",
+        "projection",
+        "harmonic_order",
+        "harmonic_component",
+        "harmonic_normalization"
+      ]
+    },
+    {
+      "module": "underworld3.postprocessing.geoid",
+      "name": "spherical_boundary_reaction_coefficient",
+      "arguments": [
+        "stokes",
+        "boundary",
+        "harmonic_degree",
+        "harmonic_order",
+        "harmonic_component",
+        "harmonic_normalization"
+      ]
+    },
+    {
+      "module": "underworld3.postprocessing.geoid",
+      "name": "cylindrical_power_law_volume_potential_coefficient",
+      "arguments": [
+        "radius_inner",
+        "radius_outer",
+        "target_radius",
+        "wavenumber",
+        "radial_exponent",
+        "density_coefficient",
+        "gravitational_constant"
+      ]
+    },
+    {
+      "module": "underworld3.postprocessing.geoid",
+      "name": "cylindrical_sheet_potential_coefficient",
+      "arguments": [
+        "source_radius",
+        "target_radius",
+        "wavenumber",
+        "surface_density_coefficient",
+        "gravitational_constant"
+      ]
+    },
+    {
+      "module": "underworld3.postprocessing.geoid",
+      "name": "cylindrical_sheet_radial_derivative_coefficient",
+      "arguments": [
+        "source_radius",
+        "target_radius",
+        "wavenumber",
+        "surface_density_coefficient",
+        "gravitational_constant",
+        "source_side"
+      ]
+    },
+    {
+      "module": "underworld3.postprocessing.geoid",
+      "name": "cylindrical_annulus_potential_operator",
+      "arguments": [
+        "radius_inner",
+        "radius_outer",
+        "wavenumber",
+        "outer_density_contrast",
+        "inner_density_contrast",
+        "gravitational_constant"
+      ]
+    },
+    {
+      "module": "underworld3.postprocessing.geoid",
+      "name": "cylindrical_annulus_geoid_response",
+      "arguments": [
+        "radius_inner",
+        "radius_outer",
+        "wavenumber",
+        "outer_topography_coefficient",
+        "inner_topography_coefficient",
+        "outer_density_contrast",
+        "inner_density_contrast",
+        "outer_reference_gravity",
+        "inner_reference_gravity",
+        "internal_load_radius",
+        "internal_surface_density_coefficient",
+        "volume_density_radial_exponent",
+        "volume_density_coefficient",
+        "gravitational_constant"
+      ]
+    },
+    {
+      "module": "underworld3.postprocessing.geoid",
+      "name": "cylindrical_annulus_self_gravity_response",
+      "arguments": [
+        "radius_inner",
+        "radius_outer",
+        "wavenumber",
+        "outer_topography_coefficient",
+        "inner_topography_coefficient",
+        "outer_density_contrast",
+        "inner_density_contrast",
+        "outer_reference_gravity",
+        "inner_reference_gravity",
+        "internal_load_radius",
+        "internal_surface_density_coefficient",
+        "volume_density_radial_exponent",
+        "volume_density_coefficient",
+        "gravitational_constant",
+        "outer_feedback_factor",
+        "inner_feedback_factor"
+      ]
+    },
+    {
+      "module": "underworld3.postprocessing.geoid",
+      "name": "cylindrical_cosine_boundary_coefficient",
+      "arguments": [
+        "coords",
+        "values",
+        "wavenumber"
+      ]
+    },
+    {
+      "module": "underworld3.postprocessing.geoid",
+      "name": "cylindrical_annulus_response_from_rotated_stokes",
+      "arguments": [
+        "stokes",
+        "radius_inner",
+        "radius_outer",
+        "wavenumber",
+        "outer_density_contrast",
+        "inner_density_contrast",
+        "outer_reference_gravity",
+        "inner_reference_gravity",
+        "internal_load_radius",
+        "internal_surface_density_coefficient",
+        "volume_density_radial_exponent",
+        "volume_density_coefficient",
+        "outer_boundary",
+        "inner_boundary",
+        "outer_buoyancy_scale",
+        "inner_buoyancy_scale",
+        "gravitational_constant",
+        "include_self_gravity",
+        "outer_feedback_factor",
+        "inner_feedback_factor"
+      ]
+    },
+    {
+      "module": "underworld3.postprocessing.geoid",
+      "name": "gather_unique_boundary_samples",
+      "arguments": [
+        "coords",
+        "values",
+        "dimension"
+      ]
+    },
+    {
+      "module": "underworld3.postprocessing.cylindrical_potential",
+      "name": "solve_cylindrical_sheet_potential",
+      "arguments": [
+        "gravity_mesh",
+        "field_name",
+        "radius_inner",
+        "radius_internal",
+        "radius_outer",
+        "radius_exterior",
+        "radius_interior",
+        "wavenumber",
+        "inner_sheet_density",
+        "internal_sheet_density",
+        "outer_sheet_density",
+        "gravitational_constant",
+        "potential_degree",
+        "tolerance",
+        "boundary_samples",
+        "inner_boundary",
+        "internal_boundary",
+        "outer_boundary",
+        "exterior_boundary",
+        "interior_boundary",
+        "solver_options"
+      ]
+    },
+    {
+      "module": "underworld3.postprocessing.spherical_interface_load",
+      "name": "assemble_axisymmetric_sheet_load",
+      "arguments": [
+        "kwargs"
+      ]
+    },
+    {
+      "module": "underworld3.postprocessing.spherical_interface_load",
+      "name": "assemble_spherical_harmonic_sheet_load",
+      "arguments": [
+        "mesh",
+        "load_variable",
+        "interface",
+        "harmonic_degree",
+        "harmonic_order",
+        "harmonic_component",
+        "harmonic_normalization",
+        "density_coefficient",
+        "gravitational_constant",
+        "quadrature_points"
+      ]
+    },
+    {
+      "module": "underworld3.postprocessing.spherical_interface_load",
+      "name": "project_axisymmetric_trace_coefficient",
+      "arguments": [
+        "harmonic_norm",
+        "kwargs"
+      ]
+    },
+    {
+      "module": "underworld3.postprocessing.spherical_interface_load",
+      "name": "project_spherical_harmonic_trace_coefficient",
+      "arguments": [
+        "mesh",
+        "variable",
+        "interface",
+        "interface_radius",
+        "harmonic_degree",
+        "harmonic_order",
+        "harmonic_component",
+        "harmonic_normalization",
+        "harmonic_norm_value",
+        "quadrature_points"
+      ]
+    },
+    {
+      "module": "underworld3.postprocessing.spherical_interface_load",
+      "name": "install_linear_spherical_stokes_sheet_load",
+      "arguments": [
+        "stokes",
+        "interface",
+        "harmonic_degree",
+        "density_coefficient",
+        "harmonic_order",
+        "harmonic_component",
+        "harmonic_normalization",
+        "quadrature_points",
+        "modes"
+      ]
+    },
+    {
+      "module": "underworld3.postprocessing.spherical_potential",
+      "name": "solve_spherical_potential",
+      "arguments": [
+        "mesh",
+        "field_name",
+        "harmonic_degree",
+        "harmonic_order",
+        "harmonic_component",
+        "harmonic_normalization",
+        "sheet_densities",
+        "sheet_radii",
+        "sheet_modes",
+        "volume_density",
+        "density_power",
+        "volume_regions",
+        "exterior_condition",
+        "radius_inner",
+        "radius_outer",
+        "radius_exterior",
+        "inner_boundary",
+        "outer_boundary",
+        "exterior_boundary",
+        "gravitational_constant",
+        "solver_options",
+        "tolerance"
+      ]
+    }
+  ]
+}
