@@ -60,7 +60,7 @@ Newton/`ksponly` and Dirichlet/Robin conditions, repeated signed/zero loads,
 linearity and fixed fields/native handles. These are implementation checks;
 physical spherical accuracy and measured memory improvement remain separate.
 
-The next single batched rebuild uses express, eight CPUs, 32 GB and a one-hour
+This single batched rebuild uses express, eight CPUs, 32 GB and a one-hour
 cap against the existing int32 SIF above. Fresh source and installation paths:
 
 - `/scratch/m18/tg7098/uw3-container-builds/topography-geoid-0b365d32fc9d-sheet-jac-int32-src`
@@ -68,5 +68,20 @@ cap against the existing int32 SIF above. Fresh source and installation paths:
 
 Use a fresh independent shared clone on the feature branch, rather than moving
 the home checkout or previous source branches. Preserve PETSc, SIF, old installs
-and Gadi records. Deployment metadata, submitted job ID and final gates will be
-added here after submission; no physical benchmark is submitted by the build.
+and Gadi records. Build `181313486.gadi-pbs` was submitted on 15 October 2026
+using immutable operations `177700441414f6027100b786c1a88dc0f94643c8`, with the
+same resources above. The home UW3 checkout remained clean on
+`time_for_loop_in_solver` at `6c4b57944eeacb7534ece451e8021633df8dd029`.
+Deployment metadata and logs are in the common benchmark output tree under
+`gadi_int32/sheet_operator_initialization_2026-10-15/build_0b365d32fc9d/`.
+The installation gate passed: exit 0 in 5:08, peak memory 5,489,804 KB (5.24 GiB),
+241 serial passes/one skip and 76 passes per MPI8 rank (14 deselected per rank).
+All four new native reuse cases passed in serial and MPI8. PETSc 3.25.4 int32,
+parallel HDF5, package/native origins and host Open MPI 4.1.7 injection passed.
+Installed helper and public-solver Python hashes exactly match the pinned source.
+`INSTALL_VALIDATED` is present. Compact records are in
+`records/topography-geoid-0b365d32fc9d-sheet-jac-int32/`; the common output retains
+the full build log, submission record, PBS final state and artifact hashes.
+No physical benchmark or int64 job was submitted by this build. These gates
+establish installation and native component correctness, not full-ball gravity
+accuracy or measured multi-source memory improvement.

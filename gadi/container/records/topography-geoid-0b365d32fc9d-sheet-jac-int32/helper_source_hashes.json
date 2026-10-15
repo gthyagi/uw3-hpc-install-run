@@ -1,0 +1,15 @@
+{
+  "utilities/_spherical_potential.py": {
+    "source_sha256": "a4b39137f0ed303ce1e336af62b0b4fde3a68432db639d842c6a06aa10881c36",
+    "installed_sha256": "a4b39137f0ed303ce1e336af62b0b4fde3a68432db639d842c6a06aa10881c36",
+    "equal": true
+  },
+  "systems/solvers.py": {
+    "source_sha256": "df7710e8dfbef719823734e90a56e4f8d43d774932c57ef57e16349adca46245",
+    "installed_sha256": "df7710e8dfbef719823734e90a56e4f8d43d774932c57ef57e16349adca46245",
+    "equal": true
+  },
+  "tests/test_1088_spherical_sheet_operator_initialization.py": {
+    "source_sha256": "af8521df03971b4233327beeadde15c19b7fe396e1684924ebccfe0801a1da6b"
+  }
+}

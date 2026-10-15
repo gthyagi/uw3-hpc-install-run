@@ -1,0 +1,64 @@
+{
+  "date": "2026-10-15",
+  "job_id": "181313486.gadi-pbs",
+  "revision": "0b365d32fc9db44069faea753da118e3ff07315a",
+  "operations_revision": "177700441414f6027100b786c1a88dc0f94643c8",
+  "install": "/g/data/m18/tg7098/containers/underworld3/builds/topography-geoid-0b365d32fc9d-sheet-jac-int32",
+  "image": "/g/data/m18/tg7098/containers/underworld3/uw3-int32-0fb244a7.sif",
+  "petsc_integer_bits": 32,
+  "serial": {
+    "tests": 242,
+    "skipped": 1,
+    "failures": 0,
+    "errors": 0
+  },
+  "pytest_summary_lines": [
+    "241 passed, 1 skipped in 38.04s",
+    "76 passed, 14 deselected in 10.48s",
+    "76 passed, 14 deselected in 10.57s",
+    "76 passed, 14 deselected in 10.58s",
+    "76 passed, 14 deselected in 10.63s",
+    "76 passed, 14 deselected in 10.63s",
+    "76 passed, 14 deselected in 10.64s",
+    "76 passed, 14 deselected in 10.64s",
+    "76 passed, 14 deselected in 10.64s"
+  ],
+  "pbs": {
+    "resources_used.cput": "00:07:05",
+    "resources_used.mem": "5489804kb",
+    "resources_used.walltime": "00:05:08",
+    "job_state": "F",
+    "Exit_status": "0"
+  },
+  "validated": true,
+  "models_submitted": [],
+  "no_int64_job": true,
+  "python_source_hashes_verified": true,
+  "serial_passed": 241,
+  "serial_skipped": 1,
+  "mpi8_passed_per_rank": 76,
+  "mpi8_deselected_per_rank": 14,
+  "native_reuse_regression_serial_cases": [
+    {
+      "name": "test_repeated_sheet_sources_initialize_operator_and_preserve_linearity[dirichlet-newtonls]",
+      "classname": "test_1088_spherical_sheet_operator_initialization",
+      "seconds": 2.133
+    },
+    {
+      "name": "test_repeated_sheet_sources_initialize_operator_and_preserve_linearity[dirichlet-ksponly]",
+      "classname": "test_1088_spherical_sheet_operator_initialization",
+      "seconds": 0.523
+    },
+    {
+      "name": "test_repeated_sheet_sources_initialize_operator_and_preserve_linearity[robin-newtonls]",
+      "classname": "test_1088_spherical_sheet_operator_initialization",
+      "seconds": 2.068
+    },
+    {
+      "name": "test_repeated_sheet_sources_initialize_operator_and_preserve_linearity[robin-ksponly]",
+      "classname": "test_1088_spherical_sheet_operator_initialization",
+      "seconds": 0.458
+    }
+  ],
+  "image_sha256": "9c4543d0362b08f5ba9f58559967b4bdb983beadb17c049fcae6af7c6e00a0bd"
+}
