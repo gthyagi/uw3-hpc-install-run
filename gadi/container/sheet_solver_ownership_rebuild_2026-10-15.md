@@ -30,3 +30,17 @@ These check implementation and analytical errors, not resolution sufficiency or
 completion of the separate mean-correction/layered-velocity accuracy audits.
 Job IDs, gates and measured results are added after execution. No int64 job is
 requested.
+
+## Completed installation gate
+
+Build `181295353.gadi-pbs` exited 0 in 4:27, peak memory 5,151,168 KB.
+235 serial tests passed (one skipped), and 70 passed on every MPI8 rank
+(14 deselected per rank). Both new solver methods and utility origins pass.
+The installation is validated at
+`/g/data/m18/tg7098/containers/underworld3/builds/topography-geoid-3abcd3f3-sheet-api-int32`.
+Compact records are in `records/topography-geoid-3abcd3f3-sheet-api-int32/`.
+
+Only after that gate passed, submitted spherical `181295591.gadi-pbs` and
+annulus `181295592.gadi-pbs`, using immutable benchmark `ce1e003a33d23498060c007314df911c990629e6`
+and operations `dcde75a90c8cb43e2acb5c93c2961d1533c5c19b` worktrees. Model completion
+and accuracy are recorded separately in the benchmark repository.
