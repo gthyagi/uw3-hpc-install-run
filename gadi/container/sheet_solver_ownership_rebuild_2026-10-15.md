@@ -44,3 +44,29 @@ Only after that gate passed, submitted spherical `181295591.gadi-pbs` and
 annulus `181295592.gadi-pbs`, using immutable benchmark `ce1e003a33d23498060c007314df911c990629e6`
 and operations `dcde75a90c8cb43e2acb5c93c2961d1533c5c19b` worktrees. Model completion
 and accuracy are recorded separately in the benchmark repository.
+
+## Poisson operator-initialization correction
+
+Validated UW3 source `0b365d32fc9db44069faea753da118e3ff07315a` fixes the
+sheet-correction helper when the homogeneous base Poisson solve converges in
+zero Newton iterations, leaving its Jacobian unassembled. The helper assembles
+the configured native Jacobian before the sheet correction in that case.
+Source signs, mean correction and physical boundary data are unchanged.
+
+The build runner's serial and MPI8 lists include
+`test_1088_spherical_sheet_operator_initialization.py` (runner change
+`055e899caacfabab34ffa9a015942bbd99bcf441`). Its four native component cases cover
+Newton/`ksponly` and Dirichlet/Robin conditions, repeated signed/zero loads,
+linearity and fixed fields/native handles. These are implementation checks;
+physical spherical accuracy and measured memory improvement remain separate.
+
+The next single batched rebuild uses express, eight CPUs, 32 GB and a one-hour
+cap against the existing int32 SIF above. Fresh source and installation paths:
+
+- `/scratch/m18/tg7098/uw3-container-builds/topography-geoid-0b365d32fc9d-sheet-jac-int32-src`
+- `/g/data/m18/tg7098/containers/underworld3/builds/topography-geoid-0b365d32fc9d-sheet-jac-int32`
+
+Use a fresh independent shared clone on the feature branch, rather than moving
+the home checkout or previous source branches. Preserve PETSc, SIF, old installs
+and Gadi records. Deployment metadata, submitted job ID and final gates will be
+added here after submission; no physical benchmark is submitted by the build.
