@@ -34,6 +34,7 @@ printf '%s\n' "$PETSC_INT_BITS" > "$DEST/petsc_integer_bits.txt"
 printf '%s\n' "${PBS_JOBID}" > "$DEST/build_job_id.txt"
 cp "$HERE/build_topography_geoid.pbs" "$DEST/"
 cp "$HERE/verify_feature_install.py" "$DEST/"
+cp "$HERE/pytest_import_first.py" "$DEST/"
 
 # Preserve the image's Python/PETSc paths. Set comma-valued MPI options inside
 # Bash: Singularity --env parses commas as separators between assignments.
@@ -52,13 +53,19 @@ singularity exec --cleanenv \
     export UW_MESH_CACHE_DIR=/build/meshes-serial
     cd /build
     /opt/venv/bin/python3 /build/verify_feature_install.py /build/python /build/serial-runtime.json 1 "$EXPECTED_PETSC_INT_BITS"
-    /opt/venv/bin/python3 -m pytest -q --import-mode=importlib \
+    /opt/venv/bin/python3 /build/pytest_import_first.py -q --import-mode=importlib \
         /src/tests/test_1070_postprocessing_geoid.py \
         /src/tests/test_1073_postprocessing_cylindrical_geoid.py \
         /src/tests/test_1074_analytic_cylindrical_gravity.py \
         /src/tests/test_1075_analytic_spherical_gravity.py \
         /src/tests/test_1030_analytic_zhong2008.py \
+        /src/tests/test_1076_cylindrical_potential_api.py \
+        /src/tests/test_1077_spherical_reaction_and_physical.py \
         /src/tests/test_1078_spherical_gravity_oracle.py \
+        /src/tests/test_1079_spherical_potential_pool.py \
+        /src/tests/test_1080_poisson_robin_jacobian.py \
+        /src/tests/test_1081_spherical_volume_regions.py \
+        /src/tests/test_1087_spherical_sheet_solver_methods.py \
         /src/tests/test_1082_spherical_solver_contract.py \
         /src/tests/test_1083_spherical_stokes_sheet_setup.py \
         /src/tests/test_1084_rotated_solver_type.py \
@@ -77,7 +84,10 @@ cd "$DEST"
 timeout 600 mpiexec -n 8 bash "$HERE/validation/run_container.sh" "$SIF" \
     "$DEST/verify_feature_install.py" "$DEST/python" "$DEST/mpi8-runtime.json" 8 "$PETSC_INT_BITS"
 timeout 600 mpiexec -n 8 bash "$HERE/validation/run_container.sh" "$SIF" \
-    -m pytest -q --import-mode=importlib \
+    "$DEST/pytest_import_first.py" -q --import-mode=importlib \
+    "$SOURCE/tests/test_1079_spherical_potential_pool.py" \
+    "$SOURCE/tests/test_1081_spherical_volume_regions.py" \
+    "$SOURCE/tests/test_1087_spherical_sheet_solver_methods.py" \
     "$SOURCE/tests/test_1082_spherical_solver_contract.py" \
     "$SOURCE/tests/test_1083_spherical_stokes_sheet_setup.py" \
     "$SOURCE/tests/test_1084_rotated_solver_type.py" \

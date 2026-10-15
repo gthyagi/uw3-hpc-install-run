@@ -22,6 +22,22 @@ assert 8 * np.dtype(PETSc.IntType).itemsize == expected_integer_bits
 assert h5py.get_config().mpi
 assert MPI.COMM_WORLD.size == size
 assert hasattr(generic_solvers.SNES_Stokes_SaddlePt, "rotated_solver_type")
+solver_methods = {}
+for cls, name in (
+    (uw.systems.Stokes, "install_linear_spherical_sheet_load"),
+    (uw.systems.Poisson, "solve_linear_spherical_sheet_sources"),
+):
+    method = getattr(cls, name)
+    assert callable(method)
+    origin = Path(inspect.getfile(method)).resolve()
+    assert origin.is_relative_to(prefix)
+    solver_methods[cls.__name__ + "." + name] = str(origin)
+from underworld3.utilities import _spherical_interface_load, _spherical_potential, _spherical_solver_contract
+utility_modules = {}
+for module in (_spherical_interface_load, _spherical_potential, _spherical_solver_contract):
+    assert Path(module.__file__).resolve().is_relative_to(prefix)
+    utility_modules[module.__name__] = module.__file__
+assert not (prefix / "underworld3/postprocessing/_spherical_solver_contract.py").exists()
 case_modules = {}
 for cls, owner in (
     (uw.analytic.KramerCylindricalStokes, "cylindrical.kramer"),
@@ -50,6 +66,8 @@ record = {
     "parallel_hdf5": h5py.get_config().mpi,
     "mpi_library": MPI.Get_library_version(),
     "analytic_case_modules": case_modules,
+    "sheet_solver_methods": solver_methods,
+    "sheet_utility_modules": utility_modules,
 }
 records = MPI.COMM_WORLD.gather(record, root=0)
 if MPI.COMM_WORLD.rank == 0:
