@@ -66,6 +66,7 @@ singularity exec --cleanenv \
         /src/tests/test_1080_poisson_robin_jacobian.py \
         /src/tests/test_1081_spherical_volume_regions.py \
         /src/tests/test_1087_spherical_sheet_solver_methods.py \
+        /src/tests/test_1088_spherical_sheet_operator_initialization.py \
         /src/tests/test_1082_spherical_solver_contract.py \
         /src/tests/test_1083_spherical_stokes_sheet_setup.py \
         /src/tests/test_1084_rotated_solver_type.py \
@@ -88,6 +89,7 @@ timeout 600 mpiexec -n 8 bash "$HERE/validation/run_container.sh" "$SIF" \
     "$SOURCE/tests/test_1079_spherical_potential_pool.py" \
     "$SOURCE/tests/test_1081_spherical_volume_regions.py" \
     "$SOURCE/tests/test_1087_spherical_sheet_solver_methods.py" \
+    "$SOURCE/tests/test_1088_spherical_sheet_operator_initialization.py" \
     "$SOURCE/tests/test_1082_spherical_solver_contract.py" \
     "$SOURCE/tests/test_1083_spherical_stokes_sheet_setup.py" \
     "$SOURCE/tests/test_1084_rotated_solver_type.py" \
